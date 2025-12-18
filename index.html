@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goy Project - Upgrade Lampu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET & VARIABLES */
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e429f;
+            --secondary: #f59e0b;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --success: #10b981;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-wa {
+            background: #25D366;
+        }
+        
+        .btn-wa:hover {
+            background: #128C7E;
+        }
+        
+        /* HEADER */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav a {
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* KEUNGGULAN SECTION */
+        .advantages {
+            background: white;
+        }
+        
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .advantage-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .advantage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .advantage-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .advantage-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .advantage-card p {
+            color: var(--gray);
+        }
+        
+        /* SERVICES */
+        .services {
+            background: var(--light);
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .service-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .service-content {
+            padding: 1.5rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* GALLERY */
+        .gallery {
+            background: white;
+        }
+        
+        .gallery-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .gallery-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 1rem;
+            padding: 1rem 0;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .gallery-slider::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+        
+        .gallery-slide {
+            flex: 0 0 calc(33.333% - 1rem);
+            scroll-snap-align: start;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-slide:hover {
+            transform: scale(1.03);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-slide:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .gallery-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        
+        .gallery-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+        
+        .gallery-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        
+        .gallery-arrow:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .gallery-arrow.prev {
+            left: -20px;
+        }
+        
+        .gallery-arrow.next {
+            right: -20px;
+        }
+        
+        /* PACKAGES */
+        .packages {
+            background: var(--light);
+        }
+        
+        .package-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .package-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .package-card.popular {
+            border-top-color: var(--secondary);
+            transform: scale(1.05);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .package-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .package-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .package-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-light);
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .package-card li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--success);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* TESTIMONI SECTION */
+        .testimonials {
+            background: white;
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+        
+        .testimonial-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .testimonial-card {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .testimonial-rating {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .testimonial-dot.active {
+            background: var(--primary);
+        }
+        
+        /* FAQ SECTION */
+        .faq {
+            background: var(--light);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: #f8fafc;
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        /* MAPS SECTION */
+        .maps {
+            background: white;
+        }
+        
+        .maps-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .map-frame {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .map-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .map-info {
+            padding: 2rem;
+        }
+        
+        .map-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .map-info p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .map-details {
+            margin-top: 2rem;
+        }
+        
+        .map-detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .map-detail-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        /* CONTACT */
+        .contact {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            color: white;
+        }
+        
+        .contact h2::after {
+            background: var(--secondary);
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .contact-text h3 {
+            margin-bottom: 0.2rem;
+        }
+        
+        /* FOOTER */
+        .footer {
+            background: #111827;
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .maps-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-slide {
+                flex: 0 0 calc(50% - 1rem);
+            }
+            
+            .gallery-arrow.prev {
+                left: 10px;
+            }
+            
+            .gallery-arrow.next {
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+           nav {
+                position: fixed;
+                top: 70px;
+                right: 0;
+                width: 30%;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: var(--shadow);
+                transform: translateY(-150%);
+                transition: transform 0.5s ease;
+                z-index: 999;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .package-card.popular {
+                transform: scale(1);
+            }
+            
+            .gallery-slide {
+                flex: 0 0 100%;
+            }
+            
+            .gallery-arrow {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .map-frame {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="container nav-container">
+        <div class="logo">Goy<span> Project</span></div>
+        <nav id="nav-menu">
+            <a href="#hero">Home</a>
+            <a href="#advantages">Keunggulan</a>
+            <a href="#services">Layanan</a>
+            <a href="#gallery">Galeri</a>
+            <a href="#packages">Paket</a>
+            <a href="#testimonials">Testimoni</a>
+            <a href="#faq">FAQ</a>
+            <a href="#maps">Lokasi</a>
+        </nav>
+        <button class="mobile-menu-btn" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section id="hero" class="hero">
+    <div class="hero-overlay"></div>
+    <img class="hero-bg" src="/static/img/background.jpg" alt="Lampu Motor Premium">
+    <div class="hero-content">
+        <h1>Upgrade Lampu Motor Premium</h1>
+        <p>Lebih terang • Tidak menyilaukan • Garansi resmi • Teknisi berpengalaman</p>
+        <div class="hero-btns">
+            <a href="https://wa.me/6283179060741" class="btn btn-wa">
+                <i class="fab fa-whatsapp"></i> Booking Sekarang
+            </a>
+            <a href="#services" class="btn">Lihat Layanan</a>
+        </div>
+    </div>
+</section>
+
+<!-- KEUNGGULAN -->
+<section id="advantages" class="advantages">
+    <div class="container">
+        <h2>Keunggulan Kami</h2>
+        <div class="advantages-grid">
+            <div class="advantage-card">
+                <div class="advantage-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3>Garansi Resmi</h3>
+                <p>Semua produk dilengkapi dengan garansi resmi dari distributor untuk kepastian kualitas</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Teknisi Berpengalaman</h3>
+                <p>Ditangani oleh teknisi profesional dengan pengalaman lebih dari 5 tahun di bidangnya</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Hasil Maksimal</h3>
+                <p>Pencahayaan optimal dengan pola yang presisi dan tidak menyilaukan pengendara lain</p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Aman & Terpercaya</h3>
+                <p>Proses instalasi aman, tidak merusak sistem kelistrikan kendaraan Anda</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services">
+    <div class="container">
+        <h2>Layanan Kami</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <img src="/static/img/k1.jpg" alt="Lampu LED" class="service-img">
+                <div class="service-content">
+                    <h3>Lampu LED Headlight</h3>
+                    <p>Pemasangan lampu LED dengan teknologi terbaru untuk pencahayaan maksimal dan hemat energi.</p>
+                    <a href="product-led.html" class="btn">Detail Layanan</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="/static/img/k4.jpg" alt="Lampu Biled Premium" class="service-img">
+                <div class="service-content">
+                    <h3>Lampu Biled Premium</h3>
+                    <p>Upgrade ke sistem Biled untuk pencahayaan yang lebih terang dan jangkauan lebih jauh.</p>
+                    <a href="product-hid.html" class="btn">Detail Layanan</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="/static/img/k3.jpg" alt="Angel Eyes" class="service-img">
+                <div class="service-content">
+                    <h3>Angel Eyes DRL</h3>
+                    <p>Tambahkan kesan premium dengan ring lampu Angel Eyes dan Daytime Running Lights.</p>
+                    <a href="product-angel-eyes.html" class="btn">Detail Layanan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="gallery">
+    <div class="container">
+        <h2>Galeri Pengerjaan</h2>
+        <div class="gallery-container">
+            <div class="gallery-arrow prev" id="galleryPrev">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="gallery-slider" id="gallerySlider">
+                <div class="gallery-slide">
+                    <img src="/static/img/p1.jpg" alt="Proyek Biled Vario 125 Old" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Honda Vario 125 Old</div>
+                        <div class="gallery-desc">Biled CR7 3 Inch Ring COB</div>
+                    </div>
+                </div>
+                <div class="gallery-slide">
+                    <img src="/static/img/p2.jpg" alt="Proyek Biled Aerox Old" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Yamaha Aerox Old 155</div>
+                        <div class="gallery-desc">Biled JTZ Titan 2,5 Inch Shord BMW</div>
+                    </div>
+                </div>
+                <div class="gallery-slide">
+                    <img src="/static/img/p3.jpg" alt="Proyek Lampu Alis Beat" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Honda Beat ESP</div>
+                        <div class="gallery-desc">Lampu Alis AES Warna Custom</div>
+                    </div>
+                </div>
+                <div class="gallery-slide">
+                    <img src="/static/img/p4.jpg" alt="Proyek Biled Aerox Old" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Yamaha Aerox Old 155</div>
+                        <div class="gallery-desc">Biled Ayoto 2,5 Inch Ring COB</div>
+                    </div>
+                </div>
+                <div class="gallery-slide">
+                    <img src="/static/img/p5.jpg" alt="Proyek Biled Vario 150 New" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Honda Vario 150 New</div>
+                        <div class="gallery-desc">Biled Ibright 2,5 Inch Devil RGB</div>
+                    </div>
+                </div>
+                <div class="gallery-slide">
+                    <img src="/static/img/p6.jpg" alt="Proyek Biled Aerox Old" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">Yamaha Aerox Old 155</div>
+                        <div class="gallery-desc">Biled AES 2,5 Inch Shord BMW Devil RGB</div>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-arrow next" id="galleryNext">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="gallery-nav" id="galleryNav">
+                <div class="gallery-dot active" data-slide="0"></div>
+                <div class="gallery-dot" data-slide="1"></div>
+                <div class="gallery-dot" data-slide="2"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages" class="packages">
+    <div class="container">
+        <h2>Paket Layanan</h2>
+        <div class="package-container">
+            <div class="package-card">
+                <h3>Mini Projie</h3>
+                <p class="price">Rp 1.500.000</p>
+                <ul>
+                    <li>Pemasangan Rapi</li>
+                    <li>Garansi Resmi</li>
+                    <li>Pencahayaan Stabil</li>
+                    <li>Konsultasi Gratis</li>
+                </ul>
+                <a href="https://wa.me/6283179060741" class="btn">Pesan Sekarang</a>
+            </div>
+            <div class="package-card popular">
+                <div class="popular-badge">POPULAR</div>
+                <h3>Bi-LED Projector</h3>
+                <p class="price">Rp 3.500.000</p>
+                <ul>
+                    <li>Super Terang</li>
+                    <li>Pola Cahaya Presisi</li>
+                    <li>Anti Silau</li>
+                    <li>Garansi 2 Tahun</li>
+                    <li>Free Cleaning</li>
+                </ul>
+                <a href="https://wa.me/6283179060741" class="btn btn-wa">Pesan Sekarang</a>
+            </div>
+            <div class="package-card">
+                <h3>Angel Eyes</h3>
+                <p class="price">Rp 800.000</p>
+                <ul>
+                    <li>Elegant Look</li>
+                    <li>Nyala Stabil</li>
+                    <li>Pemasangan Profesional</li>
+                    <li>Pilihan Warna</li>
+                </ul>
+                <a href="https://wa.me/6283179060741" class="btn">Pesan Sekarang</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONI -->
+<section id="testimonials" class="testimonials">
+    <div class="container">
+        <h2>Testimoni Pelanggan</h2>
+        <div class="testimonial-container">
+            <div class="testimonial-slider" id="testimonialSlider">
+                <div class="testimonial-card">
+                    <img src="/static/img/icon1.jpg" alt="Pelanggan 1" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Hasil pengerjaan lampu LED di Goy Project sangat memuaskan. Pencahayaan jadi lebih terang dan tidak silau. Teknisinya juga ramah dan profesional. Recommended banget!"</p>
+                    <p class="testimonial-author">- Alek , Honda Vario 150 New</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="/static/img/icon2.jpg" alt="Pelanggan 2" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Sudah 2 tahun pakai lampu HID dari Goy Project, masih bagus dan terang. Garansinya juga benar-benar dihormati. Pelayanan setelah penjualan sangat baik."</p>
+                    <p class="testimonial-author">- Alep, Yamaha Aerox 155</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="/static/img/icon3.jpg" alt="Pelanggan 3" class="testimonial-avatar">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"Angel Eyes untuk Vario saya hasilnya elegan banget. Pengerjaan rapi dan cepat. Harga juga bersaing dengan kualitas premium. Pasti akan kembali untuk service lainnya."</p>
+                    <p class="testimonial-author">- Haikal, Honda Vario 125 old</p>
+                </div>
+            </div>
+            <div class="testimonial-nav">
+                <div class="testimonial-dot active" data-slide="0"></div>
+                <div class="testimonial-dot" data-slide="1"></div>
+                <div class="testimonial-dot" data-slide="2"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+    <div class="container">
+        <h2>Pertanyaan Umum</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Berapa lama proses pemasangan lampu LED?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Rata-rata proses pemasangan membutuhkan waktu 6-8 jam tergantung jenis kendaraan dan kompleksitas instalasi. Untuk kendaraan dengan sistem kelistrikan yang rumit mungkin membutuhkan waktu lebih lama.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Apakah upgrade lampu garansi resmi motor hilang?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Tidak, selama pemasangan dilakukan dengan benar oleh teknisi profesional. Kami menggunakan metode plug and play yang tidak merusak sistem kelistrikan asli kendaraan. Garansi mesin dan komponen lain tetap berlaku.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Berapa lama garansi untuk produk lampu?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Kami memberikan garansi bervariasi tergantung produk: Lampu LED (1-2 tahun), Lampu HID (2-3 tahun), dan Angel Eyes (1 tahun). Garansi mencakup kerusakan produk, tidak termasuk kerusakan akibat kecelakaan atau kesalahan penggunaan.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Apakah lampu LED lebih boros listrik?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Justru sebaliknya. Lampu LED lebih hemat energi hingga 80% dibandingkan lampu halogen biasa, dengan output cahaya yang lebih terang. Ini mengurangi beban pada alternator dan dapat menghemat bahan bakar dalam jangka panjang.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Apakah perlu booking sebelumnya?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Ya, sangat disarankan untuk booking terlebih dahulu melalui WhatsApp agar kami dapat mempersiapkan teknisi dan komponen yang dibutuhkan. Walk-in tetap dilayani namun mungkin perlu menunggu jika sedang ramai.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAPS SECTION -->
+<section id="maps" class="maps">
+    <div class="container">
+        <h2>Lokasi Kami</h2>
+        <div class="maps-container">
+            <div class="map-frame">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.856875759921!2d106.78846817500653!3d-6.289850161716028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1a0b5b56f3f%3A0x1b8c4b8b8b8b8b8b!2sJl.%20Terogong%20Raya%20No.10%2C%20Cilandak%20Tim.%2C%20Kec.%20Cilandak%2C%20Kota%20Jakarta%20Selatan%2C%20Daerah%20Khusus%20Ibukota%20Jakarta%2012420!5e0!3m2!1sid!2sid!4v1690000000000!5m2!1sid!2sid" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="map-info">
+                <h3>Temukan Lokasi Kami</h3>
+                <p>Kunjungi bengkel kami di Jl. Terogong Raya No.10, Jakarta Selatan untuk konsultasi dan pemasangan lampu motor premium.</p>
+                
+                <div class="map-details">
+                    <div class="map-detail-item">
+                        <div class="map-detail-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <strong>Alamat</strong>
+                            <p>Jl. Terogong Raya No.10, Cilandak Timur, Jakarta Selatan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-detail-item">
+                        <div class="map-detail-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <strong>Jam Operasional</strong>
+                            <p>Senin - Minggu: 09.00 - 18.00 WIB</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-detail-item">
+                        <div class="map-detail-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div>
+                            <strong>Parkir</strong>
+                            <p>Tersedia area parkir yang luas dan aman</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="https://maps.google.com/?q=Jl.+Terogong+Raya+No.10,+Jakarta+Selatan" target="_blank" class="btn" style="margin-top: 1.5rem;">
+                    <i class="fas fa-directions"></i> Dapatkan Petunjuk Arah
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Goy Project</h3>
+                <p>Spesialis upgrade lampu motor premium dengan kualitas terbaik dan garansi resmi. Hasil maksimal, harga terjangkau.</p>
+                <div class="social-links">
+    <a href="https://www.facebook.com/" target="_blank" class="social-link">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+    <a href="https://www.instagram.com/goyy.prjct/" target="_blank" class="social-link">
+        <i class="fab fa-instagram"></i>
+    </a>
+
+    <a href="https://wa.me/6283179060741" target="_blank" class="social-link">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+       </div>
+            </div>
+            <div class="footer-col">
+                <h3>Layanan</h3>
+                <a href="#"><p>Lampu LED Headlight</p></a>
+                <a href="#"><p>Lampu Biled Premium</p></a>
+                <a href="#"><p>Angel Eyes DRL</p></a>
+                <a href="#"><p>Service & Maintenance</p></a>
+            </div>
+            <div class="footer-col">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Terogong Raya No.10, Jakarta Selatan</p>
+                <p><i class="fas fa-phone-alt"></i> +62 831-7906-0741</p>
+                <p><i class="far fa-clock"></i> Buka Setiap Hari: 09.00 - 18.00 WIB</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Goy Project. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    mobileMenuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        const icon = mobileMenuToggle.querySelector('i');
+        if (navMenu.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
+    
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            navbar.style.padding = '5px 0';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.padding = '15px 0';
+        }
+    });
+    
+    // Close mobile menu when clicking on a link
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            const icon = mobileMenuToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        });
+    });
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Gallery Slider
+    const gallerySlider = document.getElementById('gallerySlider');
+    const galleryPrev = document.getElementById('galleryPrev');
+    const galleryNext = document.getElementById('galleryNext');
+    const galleryDots = document.querySelectorAll('.gallery-dot');
+    
+    let currentGallerySlide = 0;
+    const gallerySlideCount = 6; // Total number of gallery slides
+    const slidesPerView = window.innerWidth < 768 ? 1 : window.innerWidth < 992 ? 2 : 3;
+    
+    // Initialize gallery dots based on slides per view
+    function initGalleryDots() {
+        const dotsCount = Math.ceil(gallerySlideCount / slidesPerView);
+        const galleryNav = document.getElementById('galleryNav');
+        galleryNav.innerHTML = '';
+        
+        for (let i = 0; i < dotsCount; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'gallery-dot';
+            if (i === 0) dot.classList.add('active');
+            dot.setAttribute('data-slide', i);
+            dot.addEventListener('click', () => goToGallerySlide(i));
+            galleryNav.appendChild(dot);
+        }
+    }
+    
+    function goToGallerySlide(slideIndex) {
+        const slideWidth = gallerySlider.offsetWidth / slidesPerView;
+        gallerySlider.scrollTo({
+            left: slideIndex * slideWidth * slidesPerView,
+            behavior: 'smooth'
+        });
+        
+        // Update active dot
+        document.querySelectorAll('.gallery-dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === slideIndex);
+        });
+        
+        currentGallerySlide = slideIndex;
+    }
+    
+    galleryPrev.addEventListener('click', () => {
+        if (currentGallerySlide > 0) {
+            goToGallerySlide(currentGallerySlide - 1);
+        }
+    });
+    
+    galleryNext.addEventListener('click', () => {
+        const maxSlide = Math.ceil(gallerySlideCount / slidesPerView) - 1;
+        if (currentGallerySlide < maxSlide) {
+            goToGallerySlide(currentGallerySlide + 1);
+        }
+    });
+    
+    // Auto slide gallery
+    let galleryAutoSlide = setInterval(() => {
+        const maxSlide = Math.ceil(gallerySlideCount / slidesPerView) - 1;
+        if (currentGallerySlide < maxSlide) {
+            goToGallerySlide(currentGallerySlide + 1);
+        } else {
+            goToGallerySlide(0);
+        }
+    }, 4000);
+    
+    // Pause auto slide on hover
+    gallerySlider.addEventListener('mouseenter', () => {
+        clearInterval(galleryAutoSlide);
+    });
+    
+    gallerySlider.addEventListener('mouseleave', () => {
+        galleryAutoSlide = setInterval(() => {
+            const maxSlide = Math.ceil(gallerySlideCount / slidesPerView) - 1;
+            if (currentGallerySlide < maxSlide) {
+                goToGallerySlide(currentGallerySlide + 1);
+            } else {
+                goToGallerySlide(0);
+            }
+        }, 4000);
+    });
+    
+    // Initialize gallery on load
+    window.addEventListener('load', initGalleryDots);
+    window.addEventListener('resize', initGalleryDots);
+    
+    // Testimonial Slider
+    const testimonialSlider = document.getElementById('testimonialSlider');
+    const testimonialDots = document.querySelectorAll('.testimonial-dot');
+    
+    testimonialDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            // Update slider position
+            testimonialSlider.scrollTo({
+                left: testimonialSlider.offsetWidth * index,
+                behavior: 'smooth'
+            });
+            
+            // Update active dot
+            testimonialDots.forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+        });
+    });
+    
+    // Auto slide testimonials
+    let currentTestimonial = 0;
+    setInterval(() => {
+        currentTestimonial = (currentTestimonial + 1) % testimonialDots.length;
+        
+        testimonialSlider.scrollTo({
+            left: testimonialSlider.offsetWidth * currentTestimonial,
+            behavior: 'smooth'
+        });
+        
+        testimonialDots.forEach(d => d.classList.remove('active'));
+        testimonialDots[currentTestimonial].classList.add('active');
+    }, 5000);
+    
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            // Close all other items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            
+            // Toggle current item
+            item.classList.toggle('active');
+        });
+    });
+</script>
+
+</body>
+</html>

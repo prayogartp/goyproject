@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel Eyes DRL - Goy Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET & VARIABLES */
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e429f;
+            --secondary: #f59e0b;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --success: #10b981;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-wa {
+            background: #25D366;
+        }
+        
+        .btn-wa:hover {
+            background: #128C7E;
+        }
+        
+        /* HEADER */
+        .navbar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav a {
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* BREADCRUMB */
+        .breadcrumb {
+            padding: 1rem 0;
+            background: var(--light);
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary-dark);
+        }
+        
+        .breadcrumb i {
+            font-size: 0.8rem;
+        }
+        
+        /* PRODUCT DETAIL */
+        .product-detail {
+            padding: 3rem 0;
+        }
+        
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        .product-gallery {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .product-main-image {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+        
+        .product-main-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .product-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        
+        .product-thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .product-thumbnail:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .product-thumbnail.active {
+            opacity: 1;
+            border-color: var(--primary);
+        }
+        
+        .product-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1rem 0;
+        }
+        
+        .product-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .product-features {
+            margin-bottom: 2rem;
+        }
+        
+        .product-features h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .features-list {
+            list-style: none;
+        }
+        
+        .features-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .features-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--success);
+            position: absolute;
+            left: 0;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .action-btn {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .product-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+        }
+        
+        .meta-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* PRODUCT SPECS */
+        .product-specs {
+            background: white;
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+        
+        .specs-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .specs-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+        
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .specs-table tr {
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .specs-table td {
+            padding: 1rem;
+        }
+        
+        .specs-table td:first-child {
+            font-weight: 600;
+            width: 40%;
+        }
+        
+        /* COLOR OPTIONS */
+        .color-options {
+            background: var(--light);
+            padding: 3rem 0;
+        }
+        
+        .color-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .color-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .color-option {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .color-option:hover {
+            transform: translateY(-5px);
+        }
+        
+        .color-sample {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--gray-light);
+        }
+        
+        .color-white { background: #ffffff; border: 1px solid #e5e7eb; }
+        .color-blue { background: #3b82f6; }
+        .color-red { background: #ef4444; }
+        .color-green { background: #10b981; }
+        .color-purple { background: #8b5cf6; }
+        .color-rgb { 
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff);
+        }
+        
+        /* RELATED PRODUCTS */
+        .related-products {
+            padding: 3rem 0;
+            background: white;
+        }
+        
+        .related-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .related-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .related-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .related-content {
+            padding: 1.5rem;
+        }
+        
+        .related-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .related-price {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* CTA SECTION */
+        .cta-section {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #d1d5db;
+        }
+        
+        /* FOOTER */
+        .footer {
+            background: #111827;
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .product-gallery {
+                position: static;
+            }
+            
+            .product-main-image img {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                right: 0;
+                width: 30%;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: var(--shadow);
+                transform: translateY(-150%);
+                transition: transform 0.5s ease;
+                z-index: 999;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .product-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .color-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-title {
+                font-size: 1.8rem;
+            }
+            
+            .product-price {
+                font-size: 1.6rem;
+            }
+            
+            .product-main-image img {
+                height: 300px;
+            }
+            
+            .cta-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="container nav-container">
+        <div class="logo">Goy<span> Project</span></div>
+        <nav id="nav-menu">
+            <a href="/">Home</a>
+            <a href="/#services">Layanan</a>
+            <a href="/#gallery">Galeri</a>
+            <a href="/#packages">Paket</a>
+            <a href="/#testimonials">Testimoni</a>
+        </nav>
+        <button class="mobile-menu-btn" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<!-- BREADCRUMB -->
+<section class="breadcrumb">
+    <div class="container breadcrumb-content">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <a href="/#services">Layanan</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Angel Eyes DRL</span>
+    </div>
+</section>
+
+<!-- PRODUCT DETAIL -->
+<section class="product-detail">
+    <div class="container product-container">
+        <div class="product-gallery">
+            <div class="product-main-image">
+                <img src="/static/img/k3.jpg" alt="Angel Eyes DRL" id="mainImage">
+            </div>
+            <div class="product-thumbnails">
+                <div class="product-thumbnail active" data-image="/static/img/k3.jpg">
+                    <img src="/static/img/k3.jpg" alt="Thumbnail 1">
+                </div>
+                <div class="product-thumbnail" data-image="/static/img/k3.jpg">
+                    <img src="/static/img/k3.jpg" alt="Thumbnail 2">
+                </div>
+                <div class="product-thumbnail" data-image="/static/img/k3.jpg">
+                    <img src="/static/img/k3.jpg" alt="Thumbnail 3">
+                </div>
+            </div>
+        </div>
+        
+        <div class="product-info">
+            <h1 class="product-title">Angel Eyes dengan DRL</h1>
+            <p class="product-price">Rp 1.800.000</p>
+            <p class="product-description">
+                Tambahkan kesan premium dan modern pada motor Anda dengan ring lampu Angel Eyes 
+                yang dilengkapi Daytime Running Lights (DRL). Memberikan tampilan yang elegan 
+                sekaligus meningkatkan keselamatan berkendara di siang hari.
+            </p>
+            
+            <div class="product-features">
+                <h3>Fitur Utama:</h3>
+                <ul class="features-list">
+                    <li>Ring lampu LED dengan berbagai pilihan warna</li>
+                    <li>Daytime Running Lights (DRL) terintegrasi</li>
+                    <li>Desain elegant menyerupai motor premium</li>
+                    <li>Pemasangan custom sesuai model motor</li>
+                    <li>Kontrol warna RGB (opsional)</li>
+                    <li>Konsumsi daya rendah</li>
+                    <li>Umur pakai panjang hingga 30,000 jam</li>
+                </ul>
+            </div>
+            
+            <div class="product-actions">
+                <a href="https://wa.me/6283179060741?text=Halo,%20saya%20ingin%20pesan%20Angel%20Eyes%20dengan%20DRL" class="btn btn-wa action-btn">
+                    <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                </a>
+                <a href="tel:+6283179060741" class="btn action-btn">
+                    <i class="fas fa-phone-alt"></i> Telepon Sekarang
+                </a>
+            </div>
+            
+            <div class="product-meta">
+                <div class="meta-item">
+                    <div class="meta-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <strong>Garansi 1 Tahun</strong>
+                        <p>Garansi resmi produk</p>
+                    </div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div>
+                        <strong>Pemasangan Custom</strong>
+                        <p>Teknisi spesialis body kit</p>
+                    </div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <strong>4-6 Jam</strong>
+                        <p>Estimasi pengerjaan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRODUCT SPECS -->
+<section class="product-specs">
+    <div class="container specs-container">
+        <h2 class="specs-title">Spesifikasi Teknis</h2>
+        <table class="specs-table">
+            <tr>
+                <td>Jenis Produk</td>
+                <td>Angel Eyes Ring dengan DRL</td>
+            </tr>
+            <tr>
+                <td>Teknologi</td>
+                <td>LED SMD High Brightness</td>
+            </tr>
+            <tr>
+                <td>Diameter Ring</td>
+                <td>Custom sesuai model motor (80mm - 120mm)</td>
+            </tr>
+            <tr>
+                <td>Warna Tersedia</td>
+                <td>Putih, Biru, Merah, Hijau, Ungu, RGB (opsional)</td>
+            </tr>
+            <tr>
+                <td>Daytime Running Lights</td>
+                <td>Ya, dengan sensor otomatis</td>
+            </tr>
+            <tr>
+                <td>Konsumsi Daya</td>
+                <td>12W per set (24W total)</td>
+            </tr>
+            <tr>
+                <td>Voltage</td>
+                <td>12V DC</td>
+            </tr>
+            <tr>
+                <td>Umur Pakai</td>
+                <td>30,000 jam</td>
+            </tr>
+            <tr>
+                <td>Material</td>
+                <td>ABS Plastic dengan coating anti UV</td>
+            </tr>
+            <tr>
+                <td>IP Rating</td>
+                <td>IP67 (Waterproof & Dustproof)</td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<!-- COLOR OPTIONS -->
+<section class="color-options">
+    <div class="container color-container">
+        <h2 class="color-title">Pilihan Warna</h2>
+        <div class="color-grid">
+            <div class="color-option">
+                <div class="color-sample color-white"></div>
+                <h4>Putih</h4>
+                <p>Standar</p>
+            </div>
+            <div class="color-option">
+                <div class="color-sample color-blue"></div>
+                <h4>Biru</h4>
+                <p>Sporty Look</p>
+            </div>
+            <div class="color-option">
+                <div class="color-sample color-red"></div>
+                <h4>Merah</h4>
+                <p>Aggressive</p>
+            </div>
+            <div class="color-option">
+                <div class="color-sample color-green"></div>
+                <h4>Hijau</h4>
+                <p>Unique</p>
+            </div>
+            <div class="color-option">
+                <div class="color-sample color-purple"></div>
+                <h4>Ungu</h4>
+                <p>Elegant</p>
+            </div>
+            <div class="color-option">
+                <div class="color-sample color-rgb"></div>
+                <h4>RGB</h4>
+                <p>Customizable</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RELATED PRODUCTS -->
+<section class="related-products">
+    <div class="container">
+        <h2 class="related-title">Layanan Lainnya</h2>
+        <div class="related-grid">
+            <div class="related-card">
+                <img src="/static/img/k1.jpg" alt="Lampu LED Headlight" class="related-image">
+                <div class="related-content">
+                    <h3>Lampu LED Headlight</h3>
+                    <p class="related-price">Rp 2.500.000</p>
+                    <p>Upgrade lampu kepala dengan teknologi LED terbaru untuk pencahayaan maksimal.</p>
+                    <a href="product-led.html" class="btn" style="margin-top: 1rem; display: inline-block;">Detail</a>
+                </div>
+            </div>
+            <div class="related-card">
+                <img src="/static/img/k4.jpg" alt="Lampu Biled Premium" class="related-image">
+                <div class="related-content">
+                    <h3>Lampu Biled Premium</h3>
+                    <p class="related-price">Rp 3.200.000</p>
+                    <p>Sistem BILED dengan intensitas cahaya tinggi untuk visibilitas maksimal.</p>
+                    <a href="product-hid.html" class="btn" style="margin-top: 1rem; display: inline-block;">Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Siap Pasang Angel Eyes di Motor Anda?</h2>
+        <p class="cta-text">Konsultasikan model dan warna yang cocok untuk motor Anda dengan teknisi profesional kami. Dapatkan tampilan premium dengan kualitas terjamin.</p>
+        <a href="https://wa.me/6283179060741?text=Halo,%20saya%20ingin%20konsultasi%20pemasangan%20Angel%20Eyes%20untuk%20mobil%20saya" class="btn btn-wa">
+            <i class="fab fa-whatsapp"></i> Konsultasi Gratis
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Goy Project</h3>
+                <p>Spesialis upgrade lampu motor premium dengan kualitas terbaik dan garansi resmi. Hasil maksimal, harga terjangkau.</p>
+                <div class="social-links">
+    <a href="https://www.facebook.com/" target="_blank" class="social-link">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+    <a href="https://www.instagram.com/goyy.prjct/" target="_blank" class="social-link">
+        <i class="fab fa-instagram"></i>
+    </a>
+
+    <a href="https://wa.me/6283179060741" target="_blank" class="social-link">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+       </div>
+            </div>
+            <div class="footer-col">
+                <h3>Layanan</h3>
+                <a href="product-led.html"><p>Lampu LED Headlight</p></a>
+                <a href="product-hid.html"><p>Lampu Biled Premium</p></a>
+                <a href="product-angel-eyes.html"><p>Angel Eyes DRL</p></a>
+                <a href="#"><p>Service & Maintenance</p></a>
+            </div>
+            <div class="footer-col">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Terogong Raya No.10, Jakarta Selatan</p>
+                <p><i class="fas fa-phone-alt"></i> +62 831-7906-0741</p>
+                <p><i class="far fa-clock"></i> Buka Setiap Hari: 09.00 - 18.00 WIB</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Goy Project. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    mobileMenuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        const icon = mobileMenuToggle.querySelector('i');
+        if (navMenu.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
+    
+    // Close mobile menu when clicking on a link
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            const icon = mobileMenuToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        });
+    });
+    
+    // Product Image Gallery
+    const mainImage = document.getElementById('mainImage');
+    const thumbnails = document.querySelectorAll('.product-thumbnail');
+    
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', () => {
+            const imageSrc = thumbnail.getAttribute('data-image');
+            mainImage.src = imageSrc;
+            
+            // Update active thumbnail
+            thumbnails.forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+        });
+    });
+    
+    // Color Selection
+    const colorOptions = document.querySelectorAll('.color-option');
+    
+    colorOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const colorName = this.querySelector('h4').textContent;
+            const message = `Halo, saya tertarik dengan Angel Eyes DRL warna ${colorName}. Bisa info lebih lanjut?`;
+            const waLink = document.querySelector('.btn-wa.action-btn');
+            waLink.href = `https://wa.me/6283179060741?text=${encodeURIComponent(message)}`;
+            
+            // Visual feedback
+            colorOptions.forEach(opt => opt.style.border = 'none');
+            this.style.border = '2px solid var(--primary)';
+        });
+    });
+</script>
+
+</body>
+</html>
